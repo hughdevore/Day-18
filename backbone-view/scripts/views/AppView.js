@@ -4,40 +4,46 @@ var AppView = Backbone.View.extend({
 
 		_.bindAll(
 			this,
-			'PlayGame'
+			'onPlayGame'
 		);
 	
 
 		this.$textBox = $('#text-box');
 		this.$clickButton = $('#click-button');
 
-		this.$clickButton.on('click', this.PlayGame);
+		this.$clickButton.on('click', this.onPlayGame);
 
-		this.$guess = this.$textBox.val();
+		this.number = Math.round(Math.random() * (100 - 0) + 0);	
 
 		console.log(this.$guess);
 
 	},
 
-	PlayGame: function($guess) {
+	onPlayGame: function() {
 
-		var number = Math.round(Math.random() * (100 - 0) + 0);	
 
-		var win = false;
+		var guess = this.$textBox.val();
+		guess = parseInt(guess);
 
-		if (($guess >=0 || $guess <=100) === false) {
-			alert("You must enter a number..");
+		
+
+		if(isNaN(guess)) {
+			alert("You must enter a number.");
 		}
 
-		else if (($guess >=0 || $guess <=100) === true && $guess > number) {
+		else if (guess <0 || guess >100) {
+			alert("You must enter a number between 0 and 100..");
+		}
+
+		else if (guess > this.number) {
 			alert("Sorry, it's LOWER than that.");
 		} 
 
-		else if (($guess >=0 || $guess <=100) === true && $guess < number) {
+		else if (guess < this.number) {
 			alert("Sorry, it's HIGHER than that.");
 		}
 
-		else if ($guess === number) {
+		else if (guess === this.number) {
 			alert("You found the number, well played!!");
 		}
 
